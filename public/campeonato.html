@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Campeonato — E-Tilt</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=DM+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="backend.css" />
+  </head>
+  <body>
+    <header>
+      <a href="/" class="brand"><span class="brand-icon">ϟ</span>E-TILT</a>
+      <nav>
+        <a href="/" class="nav-link results-nav">Explorar</a
+        ><a href="painel.html" class="nav-link results-nav">Minha conta</a>
+      </nav>
+    </header>
+    <main class="backend-main">
+      <a href="/" class="back-link">← Explorar campeonatos</a>
+      <div id="message" role="status" hidden></div>
+      <section id="tournament" class="backend-box">Carregando…</section>
+    </main>
+    <script src="vendor/supabase.js"></script>
+    <script src="backend.js"></script>
+    <script>
+      const h = ET.escape,
+        id = new URLSearchParams(location.search).get('id');
+      ET.init()
+        .then(async () => {
+          const t = await ET.api('tournaments/' + id);
+          document.title = t.name + ' — E-Tilt';
+          document.querySelector('#tournament').innerHTML =
+            `<div class="eyebrow">${t.game === 'valorant' ? 'VALORANT' : 'LEAGUE OF LEGENDS'} / ${h(t.level)}</div><h2 style="margin-top:15px">${h(t.name)}</h2><p class="safe-description">${h(t.description)}</p><div class="live-details"><div><span>Início · Brasília</span><b>${ET.date(t.starts_at)}</b></div><div><span>Inscrições até</span><b>${ET.date(t.registration_closes_at)}</b></div><div><span>Premiação</span><b>${ET.money(t.prize_cents)}</b></div><div><span>Vagas</span><b>Até ${t.max_teams} equipes</b></div><div><span>Formato</span><b>5v5 · MD3 · Eliminação simples</b></div></div><div class="row-actions"><a class="primary" href="stats.html?id=${id}">Resultados e estatísticas ↗</a><a class="outline" href="painel.html">Criar / gerenciar meu time</a></div><div id="registration"></div>`;
+          const {
+            data: { session },
+          } = await ET.client.auth.getSession();
+          if (t.status === 'registration' && Date.parse(t.registration_closes_at) > Date.now()) {
+            if (!session) {
+              document.querySelector('#registration').innerHTML =
+                '<p style="margin-top:20px"><a href="painel.html">Entre na sua conta para inscrever um time ↗</a></p>';
+              return;
+            }
+            const me = await ET.api('me'),
+              teams = me.teams.filter((tm) => tm.game === t.game);
+            document.querySelector('#registration').innerHTML = teams.length
+              ? `<form id="register"><label>Time para inscrição<select id="register-team">${teams.map((tm) => `<option value="${tm.id}">${h(tm.name)}</option>`).join('')}</select></label><button class="primary">Solicitar inscrição ↗</button></form><p>O organizador revisa a solicitação. O elenco de 5 jogadores fica fixado nesta inscrição.</p>`
+              : '<p style="margin-top:20px">Crie um time de 5 jogadores no painel para se inscrever.</p>';
+            if (teams.length)
+              document.querySelector('#register').onsubmit = (e) => {
+                e.preventDefault();
+                ET.run(e.submitter, async () => {
+                  await ET.api('tournaments/' + id + '/registrations', 'POST', {
+                    team_id: document.querySelector('#register-team').value,
+                  });
+                  ET.notice('Inscrição recebida. Aguarde a aprovação do organizador.');
+                });
+              };
+          }
+        })
+        .catch(ET.error);
+    </script>
+  </body>
+</html>

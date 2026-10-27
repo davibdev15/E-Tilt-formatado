@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Estatísticas — E-Tilt</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=DM+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="stats.css" />
+    <link rel="stylesheet" href="backend.css" />
+  </head>
+  <body>
+    <header>
+      <a href="/" class="brand"><span class="brand-icon">ϟ</span>E-TILT</a>
+      <nav>
+        <a href="/" class="nav-link results-nav">Explorar</a
+        ><a href="painel.html" class="nav-link results-nav">Minha conta</a>
+      </nav>
+    </header>
+    <main class="stats-main live-stats-main">
+      <div class="stats-heading">
+        <div>
+          <div class="eyebrow subtle">CADA ROUND CONTA.</div>
+          <h1>POR DENTRO <em>DO JOGO.</em></h1>
+          <p>Estatísticas dos resultados registrados pelo organizador.</p>
+        </div>
+        <button class="outline" id="refresh">Atualizar resultados ↻</button>
+      </div>
+      <div id="message" role="status" hidden></div>
+      <div class="competition-summary" id="competition-summary">Carregando campeonato…</div>
+      <nav class="stats-tabs" aria-label="Seções do campeonato">
+        <a href="#matches">Confrontos</a><a href="#bracket">Chaveamento</a
+        ><a href="#ranking">Leaderboard</a><a href="#standings">Classificação</a>
+      </nav>
+      <div id="stats-content">Carregando…</div>
+      <p class="data-note">
+        Resultados e estatísticas informados manualmente pelo organizador. Sem importação automática
+        da Riot. Datas no horário de Brasília.
+      </p>
+    </main>
+    <script src="vendor/supabase.js"></script>
+    <script src="backend.js"></script>
+    <script src="stats.js"></script>
+  </body>
+</html>

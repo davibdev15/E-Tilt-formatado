@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>E-Tilt — Campeonatos</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=DM+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="backend.css" />
+  </head>
+  <body>
+    <header>
+      <a href="/" class="brand"><span class="brand-icon">ϟ</span>E-TILT</a>
+      <nav>
+        <a class="nav-link results-nav active" href="/">Explorar</a
+        ><a class="nav-link results-nav" href="painel.html">Minha conta / Organizar ↗</a>
+      </nav>
+    </header>
+    <main class="backend-main">
+      <div class="eyebrow">SEU PRÓXIMO NÍVEL COMEÇA AQUI</div>
+      <h1>MENOS FILA.<br />MAIS <em>COMPETIÇÃO.</em></h1>
+      <p>Campeonatos de Valorant e LoL, informações, chaveamento e estatísticas em um só lugar.</p>
+      <div id="message" class="notice" hidden role="status"></div>
+      <div class="catalog-filters">
+        <input
+          id="search"
+          type="search"
+          placeholder="Buscar campeonato..."
+          aria-label="Buscar campeonato"
+        /><select id="game" aria-label="Jogo">
+          <option value="all">Todos os jogos</option>
+          <option value="valorant">Valorant</option>
+          <option value="lol">League of Legends</option></select
+        ><select id="scope" aria-label="Mostrar favoritos">
+          <option value="all">Todos</option>
+          <option value="favorites">Meus favoritos</option>
+        </select>
+      </div>
+      <div id="catalog" class="backend-grid"><p>Carregando campeonatos…</p></div>
+      <footer>
+        <a href="/" class="brand"><span class="brand-icon">ϟ</span>E-TILT</a
+        ><span>Feito para o seu competitivo.</span>
+        <p>Projeto independente, sem vínculo com a Riot Games.</p>
+      </footer>
+    </main>
+    <script src="vendor/supabase.js"></script>
+    <script src="backend.js"></script>
+    <script src="catalog.js"></script>
+  </body>
+</html>

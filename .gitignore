@@ -1,0 +1,7 @@
+node_modules/
+.npm-cache/
+public/vendor/
+.env*
+!.env.example
+.vercel/
+coverage/

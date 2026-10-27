@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Painel — E-Tilt</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=DM+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="stats.css" />
+    <link rel="stylesheet" href="backend.css" />
+  </head>
+  <body>
+    <header>
+      <a href="/" class="brand"><span class="brand-icon">ϟ</span>E-TILT</a>
+      <nav>
+        <a href="/" class="nav-link results-nav">Explorar</a
+        ><a href="painel.html" class="nav-link results-nav active">Painel</a>
+      </nav>
+    </header>
+    <main class="backend-main">
+      <div class="eyebrow">O SEU COMPETITIVO, ORGANIZADO</div>
+      <h1>PAINEL <em>E-TILT.</em></h1>
+      <div id="message" role="status" hidden></div>
+      <section id="auth-box" class="backend-box" style="max-width: 480px">
+        <h2>Entre ou crie sua conta</h2>
+        <form id="auth-form">
+          <label
+            >E-mail<input
+              type="email"
+              name="email"
+              autocomplete="email"
+              required
+              maxlength="254" /></label
+          ><label
+            >Senha<input
+              type="password"
+              name="password"
+              autocomplete="current-password"
+              minlength="12"
+              required
+          /></label>
+          <p>Para criar uma conta, use uma senha com pelo menos 12 caracteres.</p>
+          <div class="row-actions">
+            <button class="primary" name="action" value="login">Entrar ↗</button
+            ><button class="outline" name="action" value="signup">Criar conta</button
+            ><button class="text-link" name="action" value="recover" formnovalidate>
+              Recuperar senha
+            </button>
+          </div>
+        </form>
+      </section>
+      <section id="recovery-box" class="backend-box" hidden>
+        <h2>Nova senha</h2>
+        <form id="recovery-form">
+          <label
+            >Nova senha<input
+              name="password"
+              type="password"
+              minlength="12"
+              autocomplete="new-password"
+              required /></label
+          ><button class="primary">Atualizar senha</button>
+        </form>
+      </section>
+      <section id="dashboard" hidden>
+        <div class="account-banner">
+          <p id="account-email"></p>
+          <button class="outline" id="logout">Sair</button>
+        </div>
+        <div class="backend-grid">
+          <section class="backend-box">
+            <h2>Meus campeonatos</h2>
+            <div id="my-tournaments"></div>
+          </section>
+          <section class="backend-box">
+            <h2>Meus times</h2>
+            <div id="my-teams"></div>
+          </section>
+          <section class="backend-box">
+            <h2>Novo campeonato</h2>
+            <form id="tournament-form">
+              <label>Nome<input name="name" minlength="3" maxlength="100" required /></label>
+              <div class="form-row">
+                <label
+                  >Jogo<select name="game">
+                    <option value="valorant">Valorant</option>
+                    <option value="lol">League of Legends</option>
+                  </select></label
+                ><label
+                  >Nível<select name="level">
+                    <option>Amador</option>
+                    <option>Semi-pro</option>
+                  </select></label
+                >
+              </div>
+              <label
+                >Regulamento e informações<textarea
+                  name="description"
+                  maxlength="5000"
+                  required
+                ></textarea>
+              </label>
+              <div class="form-row">
+                <label
+                  >Início (seu horário local)<input
+                    name="starts_at"
+                    type="datetime-local"
+                    required /></label
+                ><label
+                  >Encerramento das inscrições<input
+                    name="registration_closes_at"
+                    type="datetime-local"
+                    required
+                /></label>
+              </div>
+              <div class="form-row">
+                <label
+                  >Máximo de times<select name="max_teams">
+                    <option>2</option>
+                    <option>4</option>
+                    <option selected>8</option>
+                    <option>16</option>
+                    <option>32</option>
+                  </select></label
+                ><label
+                  >Premiação (R$)<input
+                    name="prize"
+                    type="number"
+                    min="0"
+                    step="0.01"
+                    max="10000000"
+                    value="0"
+                    required
+                /></label>
+              </div>
+              <label class="check-label"
+                ><input type="checkbox" name="published" /> Publicar no catálogo</label
+              ><button class="primary">Criar campeonato ↗</button>
+            </form>
+          </section>
+          <section class="backend-box">
+            <h2>Novo time</h2>
+            <form id="team-form">
+              <div class="form-row">
+                <label>Nome<input name="name" minlength="2" maxlength="60" required /></label
+                ><label>Sigla<input name="tag" minlength="2" maxlength="5" required /></label>
+              </div>
+              <div class="form-row">
+                <label
+                  >Jogo<select name="game">
+                    <option value="valorant">Valorant</option>
+                    <option value="lol">League of Legends</option>
+                  </select></label
+                ><label>Cor<input name="color" type="color" value="#b79af4" /></label>
+              </div>
+              <h3>5 jogadores titulares</h3>
+              <div id="roster-fields"></div>
+              <button class="primary">Criar time ↗</button>
+            </form>
+          </section>
+          <section id="management" class="backend-box full-width" hidden>
+            <h2 id="management-title"></h2>
+            <div class="row-actions" id="management-actions"></div>
+            <h3>Inscrições</h3>
+            <div id="registrations"></div>
+            <h3>Partidas</h3>
+            <div id="managed-matches"></div>
+            <section id="result-editor" hidden></section>
+          </section>
+        </div>
+      </section>
+    </main>
+    <script src="vendor/supabase.js"></script>
+    <script src="backend.js"></script>
+    <script src="painel.js"></script>
+  </body>
+</html>
